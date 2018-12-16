@@ -12,8 +12,6 @@ alternativenma <- function(netmetaobject,random=T,small.values="good"){
   require(magic)
   require(netmeta)
   
-  source('C:/Users/Adriani/Desktop/alternativenma/R/nma.krahn.output.R')
-  
   #run network meta-analysis as a two stage meta-regression model
   if (random==T)  a <- nma.krahn.output(netmetaobject,tau.preset = netmetaobject$tau)
   if (random==F)  a <- nma.krahn.output(netmetaobject,tau.preset = 0)

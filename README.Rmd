@@ -31,6 +31,7 @@ The packages below need to be installed, uncomment the ones you don't have.
 
 library(devtools)
 library(readr)
+library(netmeta)
 ```
 
 Then, we need to install the functions to perform network meta-analysis using the alternative parametrisation from GitHub.
