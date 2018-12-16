@@ -1,0 +1,10 @@
+Package: alternativenma
+Type: Package
+Title: Alternative parametrization of network meta-analysis
+Version: 0.1.0
+Author: Adriani Nikolakopoulou
+Maintainer: Adriani Nikolakopoulou <nikolakopoulou.adriani@gmail.com>
+Description: A package to alternatively parametrize network meta-analysis.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
