@@ -1,0 +1,115 @@
+---
+title: "README"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Example of alternative parametrisation of NMA model
+
+We illustrate the reporoduction of the derivation of effects of all treatments versus a treatment of average performance using as an example a network of 18 antidepressants. 
+
+A brief description of the functions is given below. 
+
+nma.krahn.output: This function is a slightly modified version of nma.krahn function, which performs network meta-analysis as a two-stage meta-regression model and is embedded in netmeta package. The modification consists of inclusion of more results in the output, specifically the objects multiarm (a logical indicating whether multi arm studies exist), basics (comparisons that are used as basic parameters), direct2 (data frame with results from direct meta-analyses) and TE.dir (direct treatment effects).
+
+alternativenma: This function takes as input an object of class netmeta and estimates the relative effects of all treatments versus a treatment of average performance and the probabilities of all treatments being better than the average treatment.
+
+plot.alternativenma: This function takes as input an object of class alternativenma and plots a forest plot of relative effects of all treatments versus a treatment of average performance.
+
+The packages below need to be installed, uncomment the ones you don't have.
+
+```{r}
+#install.packages("plyr")
+#install.packages("devtools")
+#install.packages("ggplot2")
+#install.packages("grid")
+#install.packages("readr")
+#install_version("netmeta",version="0.9-5") 
+
+library(devtools)
+library(readr)
+```
+
+Then, we need to install the functions to perform network meta-analysis using the alternative parametrisation from GitHub.
+
+```{r}
+install_github("esm-ispm-unibe-ch/alternativenma")
+library(alternativenma)
+#source('C:/Users/Adriani/Desktop/alternativenma/R/nma.krahn.output.R')
+#source('C:/Users/Adriani/Desktop/alternativenma/R/alternativenma.R')
+#source('C:/Users/Adriani/Desktop/alternativenma/R/plot.alternativenma.R')
+```
+
+## Re analysis of depression data using the alternativenma function
+
+The outcome data for the depression example are in the library and can be downloaded as
+
+```{r}
+#depression <- read_delim("../data/depression.csv", ";", escape_double = FALSE, trim_ws = TRUE)
+data(depression)
+```
+
+and viewed
+
+```{r}
+head(depression) 
+```
+
+We first tranform the data in a pairwise format and run network meta-analysis using netmeta
+
+```{r}
+p1=pairwise(treat=drug_name,event=Responders,n=Ntotal,data=depression,studlab = studyID, sm="OR")
+netp1=netmeta(p1) 
+```
+
+The command alternativenma takes the following arguments:
+netmetaobject: An object of class netmeta
+random: A logical indicating whether a random effects meta-analysis should be conducted.
+small.values: A character string specifying whether small treatment effects indicate a "good" or "bad" effect
+
+Then, the function estimates effects of all treatments versus a treatment of average performance and returns an object of class alternativenma.
+
+```{r}
+altnetp1=alternativenma(netmetaobject=netp1,random=T, small.values = "bad")
+```
+
+An object of class alternativenma is produced that can be used as argument in plot.
+
+The output of alternativenma is a list containing the following components:
+n: number of treatments
+trts: names of treatments included
+comparisons: comparisons with direct data
+studies: data per study
+X.alt: design matrix (Y* matrix in the paper)
+X.obs.alt: design matrix (X^C* matrix in the paper)
+averages: data frame with effects of each treatment versus average in an additive scale (TE), their standard errors (seTE) and their 95% confidence interval (lower and upper) and the probability of being better than the average (Pscoreaverage) 
+TE.net.avs: network meta-analysis effects, same as those produced by netmeta
+
+## Plotting a forest plot with effects of all treatments versus average 
+
+The command plot.alternativenma takes the following arguments:
+
+altnmaobject: An object of class alternativenma
+eform: A logical indicating whether the exponential of effects should be drawn 
+ordered: A logical indicating whether the effects should be drawn ordered  
+
+Then, the function produces the forest plot with effects of all treatments versus a treatment of average performance.
+
+```{r}
+plot.alternativenma(altnetp1)
+```
+
+
+
+
+
+
+
+
+
+
+
+
