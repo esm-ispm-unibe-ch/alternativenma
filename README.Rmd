@@ -21,7 +21,7 @@ plot.alternativenma: This function takes as input an object of class alternative
 
 The packages below need to be installed, uncomment the ones you don't have.
 
-```{r}
+```{r, message=F, warning=F}
 #install.packages("plyr")
 #install.packages("devtools")
 #install.packages("ggplot2")
@@ -36,7 +36,7 @@ library(netmeta)
 
 Then, we need to install the functions to perform network meta-analysis using the alternative parametrisation from GitHub.
 
-```{r}
+```{r, message=F, warning=F}
 install_github("esm-ispm-unibe-ch/alternativenma")
 library(alternativenma)
 #source('C:/Users/Adriani/Desktop/alternativenma/R/nma.krahn.output.R')
