@@ -34,14 +34,17 @@ library(readr)
 library(netmeta)
 ```
 
-Then, we need to install the functions to perform network meta-analysis using the alternative parametrisation from GitHub.
+Then, we need to install the functions to perform network meta-analysis using the alternative parametrisation either by using ```source()```
 
 ```{r, message=F, warning=F}
-install_github("esm-ispm-unibe-ch/alternativenma")
-library(alternativenma)
-#source('C:/Users/Adriani/Desktop/alternativenma/R/nma.krahn.output.R')
-#source('C:/Users/Adriani/Desktop/alternativenma/R/alternativenma.R')
-#source('C:/Users/Adriani/Desktop/alternativenma/R/plot.alternativenma.R')
+source('./R/nma.krahn.output.R')
+source('./R/alternativenma.R')
+source('./R/plot.alternativenma.R')
+```
+or from GitHub
+```{r, message=F, warning=F}
+#install_github("esm-ispm-unibe-ch/alternativenma")
+#library(alternativenma)
 ```
 
 ## Re analysis of depression data using the alternativenma function
@@ -100,7 +103,7 @@ ordered: A logical indicating whether the effects should be drawn ordered
 Then, the function produces the forest plot with effects of all treatments versus a treatment of average performance.
 
 ```{r}
-plot.alternativenma(altnetp1)
+plot.alternativenma(altnetp1, eform=T, xmin=0, xmax=2.5, treatmentplacement=0.1, effectplacement=2.2)
 ```
 
 
