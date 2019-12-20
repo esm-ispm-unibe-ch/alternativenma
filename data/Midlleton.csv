@@ -1,0 +1,41 @@
+study;id;t;r;n;rob;indirectness
+Dickersin;1;First Generation;13;107;3;1
+Dickersin;1;Hysterectomy;7;103;3;1
+Crosignani;2;First Generation;5;38;3;1
+Crosignani;2;Hysterectomy;2;39;3;1
+O' Connor;3;First Generation;7;106;3;1
+O' Connor;3;Hysterectomy;2;50;3;1
+Pinion;4;First Generation;13;104;3;1
+Pinion;4;Hysterectomy;4;93;3;1
+Dwyer;5;First Generation;19;99;3;1
+Dwyer;5;Hysterectomy;6;97;3;1
+Brun;6;First Generation;3;16;3;1
+Brun;6;Second Generation;2;27;3;1
+Cooper 1;7;First Generation;1;101;3;1
+Cooper 1;7;Second Generation;3;201;3;1
+Perino;8;First Generation;5;55;3;1
+Perino;8;Second Generation;3;56;3;1
+Duleba;9;First Generation;10;72;3;1
+Duleba;9;Second Generation;16;156;3;1
+Hawe;10;First Generation;3;33;3;1
+Hawe;10;Second Generation;4;37;3;1
+Van Zon-Rabelink;11;First Generation;13;58;3;1
+Van Zon-Rabelink;11;Second Generation;15;75;3;1
+Cooper 2;12;First Generation;5;82;3;1
+Cooper 2;12;Second Generation;11;154;3;1
+Pellicano;13;First Generation;14;38;3;1
+Pellicano;13;Second Generation;7;37;3;1
+Soysai;14;First Generation;19;48;3;1
+Soysai;14;Second Generation;15;45;3;1
+Cooper 3;15;First Generation;33;128;3;1
+Cooper 3;15;Second Generation;29;121;3;1
+Meyer;16;First Generation;1;120;3;1
+Meyer;16;Second Generation;5;125;3;1
+Crosignani;17;Mirena;5;34;3;1
+Crosignani;17;First Generation;2;35;3;1
+Shaw;18;Mirena;5;25;3;1
+Shaw;18;Second Generation;5;28;3;1
+Busfield;19;Mirena;2;37;3;1
+Busfield;19;Second Generation;9;39;3;1
+Soysal;20;Mirena;10;32;3;1
+Soysal;20;Second Generation;9;35;3;1

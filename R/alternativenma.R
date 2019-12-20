@@ -56,13 +56,21 @@ alternativenma <- function(netmetaobject,random=T,small.values="good"){
   lower= TE - z1*seTE
   upper= TE + z1*seTE
 
-  #calculation of probabilities of being better than the average
-  Pscoreaverage=rep(0,a$n)
-  if (small.values=="good") {Pscoreaverage=pnorm(TE/seTE)}
-  if (small.values=="bad") {Pscoreaverage=1-pnorm(TE/seTE)}
+  #calculation of z scores and probabilities of being better than the average
+  #Zscores=TE/seTE
+  Zscores=Pscoreaverage=rep(0,a$n)
+  if (small.values=="good") {Pscoreaverage=pnorm(TE/seTE)
+                              Zscores=TE/seTE}
+  if (small.values=="bad") {Pscoreaverage=1-pnorm(TE/seTE)
+                              Zscores=-TE/seTE}
 
+  #Zscores=ifelse(small.values=="good",-TE/seTE,TE/seTE)
+  #Pscoreaverage=ifelse(small.values=="good",pnorm(TE/seTE),1-pnorm(TE/seTE))
+  
+  
   #summary of results
-  averages=data.frame(TE = TE, seTE = seTE, lower=lower, upper=upper, Pscoreaverage=Pscoreaverage)
+  averages=data.frame(treat=labels, TE = TE, seTE = seTE, lower=lower, upper=upper, 
+                      Zscores=Zscores,Pscoreaverage=Pscoreaverage)
   rownames(averages)=labels
   
   res <- list(n = a$n,

@@ -458,7 +458,7 @@ nma.krahn.output <- function(x, tau.preset = 0, sep.trts = x$sep.trts) {
               H.studies = H.studies,
               sep.trts = sep.trts,
               multiarm=multiarm,
-              basics=basics,
+              basics= if (multiarm) basics else NULL,
               direct2=direct2,
               TE.dir=TE.dir)
 

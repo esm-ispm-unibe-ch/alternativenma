@@ -27,7 +27,8 @@ The packages below need to be installed, uncomment the ones you don't have.
 #install.packages("ggplot2")
 #install.packages("grid")
 #install.packages("readr")
-#install_version("netmeta",version="0.9-5") 
+#install_version("netmeta",version="0.9-5")
+#install.packages("ggrepel")
 
 library(devtools)
 library(readr)
@@ -40,6 +41,9 @@ Then, we need to install the functions to perform network meta-analysis using th
 source('./R/nma.krahn.output.R')
 source('./R/alternativenma.R')
 source('./R/plot.alternativenma.R')
+source('./R/classifier.R')
+source('./R/netmetaranks_B.R')
+source('./R/netmetaranks_H.R')
 ```
 or from GitHub
 ```{r, message=F, warning=F}
@@ -92,13 +96,17 @@ X.obs.alt: design matrix (X^C* matrix in the paper)
 averages: data frame with effects of each treatment versus average in an additive scale (TE), their standard errors (seTE) and their 95% confidence interval (lower and upper) and the probability of being better than the average (Pscoreaverage) 
 TE.net.avs: network meta-analysis effects, same as those produced by netmeta
 
-## Plotting a forest plot with effects of all treatments versus average 
+## Plotting a forest plot with effects of all treatments versus average (Figure 3)
 
 The command plot.alternativenma takes the following arguments:
 
 altnmaobject: An object of class alternativenma
 eform: A logical indicating whether the exponential of effects should be drawn 
-ordered: A logical indicating whether the effects should be drawn ordered  
+ordered: A logical indicating whether the effects should be drawn ordered
+xmin: minimum limit of x axis
+xmax: maximum limit of x axis
+treatmentplacement: The x value of treatment labels
+effectplacement: The x value of the effect sizes
 
 Then, the function produces the forest plot with effects of all treatments versus a treatment of average performance.
 
@@ -106,14 +114,60 @@ Then, the function produces the forest plot with effects of all treatments versu
 plot.alternativenma(altnetp1, eform=T, xmin=0, xmax=2.5, treatmentplacement=0.1, effectplacement=2.2)
 ```
 
+## Classify treatments according to their ranking (Figure 4a)
 
+The command classifier takes the following arguments:
 
+altnmaobject: An object of class alternativenma
+toplot: A character indicating whether "Zscores" or "Pscoreaverage" are to be drawn. 
 
+Then, the function produces the forest plot with effects of all treatments versus a treatment of average performance.
 
+```{r}
+classifier(altnmaobject=altnetp1,toplot="Pscoreaverage")
+```
 
+## Reanalysis of Middleton example (Figure 4b and Figure 5)
 
+We reanalyse the network by Middleton comparing four interventions for heavy menstrual bleeding. 
 
+```{r}
+data(Midlleton)
+p2=pairwise(treat=t,event=r,n=n,data=Midlleton,studlab = id, sm="OR")
+netp2=netmeta(p2)
+altnetp2=alternativenma(netmetaobject=netp2,random=T, small.values = "good")
+plot.alternativenma(altnetp2, eform=T, xmin=0, xmax=5, treatmentplacement=0.1, effectplacement=3.8)
+classifier(altnmaobject=altnetp2,toplot="Pscoreaverage")
+```
 
+## Compare with other ranking metrics for the two networks (Table 3 and Figure 5)
+
+We compute existing ranking metrics for depression and Middleton examples.  
+
+```{r}
+gris_ranks=round(netmetaranks_B(netp1,10000),2)
+middl_ranks=round(netmetaranks_H(netp2,10000),2)
+gris_ranks
+middl_ranks
+```
+
+## Absolute effects
+
+We compute absolute effects for the depression example. 
+
+```{r}
+depression=depression[!is.na(depression$studyID),]
+mp=metaprop(event=Responders,n=Ntotal,data=depression)
+
+p3=pairwise(treat=drug_name,event=Responders,n=Ntotal,data=depression,studlab = studyID, sm="RR")
+netp3=netmeta(p3)
+altnetp3=alternativenma(netmetaobject=netp3,random=T, small.values = "bad")
+
+df=data.frame(treat=altnetp3$averages$treat,
+           absolutes=round(mp$TE.random*(1/exp(altnetp3$averages$TE)),2))
+
+df[order(df$absolutes),]
+```
 
 
 
